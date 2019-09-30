@@ -3,14 +3,14 @@
 This tutorial will teach you how to properly install ONOS using Docker and you will also test it with a simple topology using mininet.
 
 ## Requirements
-- An already configured mininet VM in virtual box
+- An already configured mininet VM in virtual box (you can check the steps on the SDN wiki [here](http://sdn.wikidot.com/setting-up))
 - The mininet VM should have access to internet
 
 ## Install Docker
 Login to the mininet VM with a user with super user permissions and run the following commands to install docker.
-`sudo apt-get update`
-`sudo apt-get -y install docker.io`
-`ln -sf /usr/bin/docker.io /usr/local/bin/docker`
+1. `sudo apt-get update` Downloads the packages lists from the repositories
+1. `sudo apt-get -y install docker.io` Install the docker.io package
+1. `ln -sf /usr/bin/docker.io /usr/local/bin/docker` Creates a symlink from where the docker io package files where installed to the directory /usr/local/bin/docker, so a linux user can run the docker cli by just running `docker`.
 
 ## Run Docker image
 - Download the onos image using  `sudo docker pull onosproject/onos`.
@@ -18,6 +18,20 @@ Login to the mininet VM with a user with super user permissions and run the foll
 You can also use an specific release version with :VERSION_NUMBER, e.g. `sudo docker pull onosproject/onos:2.1.0`
 - Run a single instance of ONOS
 `sudo docker run -t -d -p 8181:8181 -p 8101:8101 -p 5005:5005 -p 830:830 --name onos onosproject/onos`
+
+    The previous command is configured with the following options:
+    1. -t will allocate a pseudo-tty to the container
+    1. -d will run the container in foreground 
+    1. -p <CONTAINER_PORT>:<HOST_PORT> Publish a CONTAINER_PORT to a HOST_PORT so. Some of the ports that ONOS uses:
+        - 8181    for REST API and GUI
+        - 8101    to access the ONOS CLI
+        - 9876    for intra-cluster communication (communication between target machines)
+        - 6653    for OpenFlow
+        - 6640    for OVSDB
+        - 830     for NETCONF 
+        - 5005    for debugging, a java debugger can be attached to this port
+    
+    So with the previous command we are publishing the ONOS CLI, GUI, NETCONF, and Debugger ports.
 
 To run a released version use the :VERSION_NUMBER again, e.g. `sudo docker run -t -d -p 8181:8181 -p 8101:8101 -p 5005:5005 -p 830:830 --name onos onosproject/onos:2.1.0`
 
@@ -27,7 +41,7 @@ To run a released version use the :VERSION_NUMBER again, e.g. `sudo docker run -
 
 ## Access Onos UI
 
-After running the container the Onos UI should be accessible through the following url http://localhost:8181/onos/ui from mininet. We can check this by running `wget -O - http://localhost:8181/onos/ui > /dev/null`, you should see something like:
+After running the container the Onos UI should be accessible through the following url http://localhost:8181/onos/ui from mininet. We can check that ONOS is running and that the UI is accessible by running `wget -O - http://localhost:8181/onos/ui > /dev/null`, you should see something like:
 
 ![Onos successful request](./res/onos_request.png)
 
