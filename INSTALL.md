@@ -22,7 +22,7 @@ You can also use an specific release version with :VERSION_NUMBER, e.g. `sudo do
     The previous command is configured with the following options:
     1. -t will allocate a pseudo-tty to the container
     1. -d will run the container in foreground 
-    1. -p <CONTAINER_PORT>:<HOST_PORT> Publish a CONTAINER_PORT to a HOST_PORT so. Some of the ports that ONOS uses:
+    1. -p <CONTAINER_PORT>:<HOST_PORT> Publish a CONTAINER_PORT to a HOST_PORT. Some of the ports that ONOS uses:
         - 8181    for REST API and GUI
         - 8101    to access the ONOS CLI
         - 9876    for intra-cluster communication (communication between target machines)
