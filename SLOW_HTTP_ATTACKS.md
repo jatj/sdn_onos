@@ -73,7 +73,7 @@ The flow of the attack is the following:
 request.
 3. To prevent the server to timing out the connections, the attacker sends 
 partial request periodically to keep the connection alive.
-4. Once all available threads in the server are in use, the server will be unable to respond to additional requests from regular traffic.
+4. Once all available threads in the server are in use, the server will be unable to respond to additional requests from regular traffic (legitimate users).
 
 ## Attack configuration
 
@@ -86,7 +86,7 @@ If we are running a slowloris attack with **slowhttptest** we can configure the 
 - `-p <SECONDS>`, seconds to wait for HTTP response on probe connection, to determine if the server is considered as inaccesible (default is 5s)
 - `-x <BYTES>`, max length of the follow up data in bytes (default is 32 bytes)
 
-## Attacking
+## Attacking with slowloris
 
 If we want to attack the site https://super12.com/ with slowloris, 1000 connections at a rate of 100 connections per second, and generate the attack statistics with the _slowloris-test_ name, we would run the following command: `slowhttptest -H -u https://super12.com/ -c 1000 -r 100 -g -o slowloris-test`. 
 
@@ -98,7 +98,7 @@ It will start the attack and every 5 seconds it will update the status of the at
 
 After some time the connections will begin to be closed by the server so eventually the server will be available again. We can wait to finish the test in 240 seconds (the default testing time) or we can just kill the process on our terminal with ctrl+c.
 
-## Analizing
+## Analizing slowloris
 
 After finishing the test will generate a .csv and a .html with the statistics of the attack. The generated html should look like this:
 
@@ -106,21 +106,21 @@ After finishing the test will generate a .csv and a .html with the statistics of
 
 # Slow post 
 
-It is another application layer attack and in a difference from slowloris it uses legitimate HTTP POST headers to attack, however the message body is sent at a very low speed, which can be as slow as one byte every two minutes. 
+Slow post or R-U-Dead-Yet (RUDY) is another application layer attack and in a difference from slowloris it uses legitimate HTTP POST headers to attack, however the message body is sent at a very low speed, which can be as slow as one byte every two minutes. 
 
 Similar to slowloris the server will keep the attacker requests open waiting to receive the full message body, which will eventually consume all the server resources, making legitimate connections unachievable.
 
-## Attacking
+## Attacking with slow post
 
-The attack options are the same for slowloris, for more information on those options you can check the [attack configuration](#attack%20configuration) section above. 
+Some of the attack options are the same for slowloris, for more information on those options you can check the [attack configuration](#attack%20configuration) section above. 
 
-Besides the previous options, if we are using slow post we can also use the next option:
+Besides the previous options, with slow post we can also use the next option:
 
 - `-s <BYTES>`, the value of Content-Length header (default is 4096)
 
-If we want to attack the site https://super12.com/, using slow post, with 5000 connections at a rate of 100 connections per second, with a content length of 16384 and generate the attack statistics with the _slowloris-test_ name, we would run the following command: `slowhttptest -B -u https://super12.com/ -c 5000 -r 100 -s 16384 -g -o slowpost-test`.
+If we want to attack the site https://super12.com/, using slow post, with 5000 connections at a rate of 100 connections per second, with a content length of 16384 and generate the attack statistics with the _slowpost-test_ name, we would run the following command: `slowhttptest -B -u https://super12.com/ -c 5000 -r 100 -s 16384 -g -o slowpost-test`.
 
-## Analizing
+## Analizing slow post
 
 After running the test we can analize the generated html to check that the server reacted different from the slowloris attack.
 
@@ -130,10 +130,34 @@ With this type of attack the server was able to close several attack connections
 
 # Slow read
 
+The last type of slow HTTP attack that we will look into. It consists in sending inappropiate HTTP request to the server, but read the response at a slow pace. 
+
+The response can be readed as slow as one byte at a time, the attacker prevent the server to timeout the connection, because the server assumes the attacker is reading the data therefore it keeps the connection alive. 
+
+## Attacking with slow read
+
+Some of the attack options are the same for slowloris, for more information on those options you can check the [attack configuration](#attack%20configuration) section above. 
+
+Besides the previous options, with slow read we can also use the following options:
+
+- `-z <BYTES>` bytes to read from receive buffer with single read() operation
+- `-n <SECONDS>` interval between read operations from receive buffer
+- `-w <BYTES>` start of range the advertised window size would be picked from
+- `-y <BYTES>` end of range the advertised window size would be picked from
+
+So if we want to attack the site https://super12.com/, using slow read with 1000 connections, since it is slow read we want to create all connections at once so the connection rate will be 1000 also, with a 5 second interval between read operations, 32 bytes to read from the receive buffer per read operation and generate the attack statistics with the _slowread-test_ name, we would run the following command: `slowhttptest -X -u https://super12.com/ -c 1000 -r 1000 -n 5 -z 32 -g -o slowread-test`.
+
+## Analizing slow read
+
+After running the test we can see that unlike the slow post attack, slow read keeps the server down for a while. Even after the attack is ended the server takes time to recover from the attack. Below are the statistics of the slow read attack.
+
+![slowpost attack](./res/slow-attack/slowread-test1-html.png)
 
 # References:
 
-https://www.cloudflare.com/learning/ddos/ddos-low-and-slow-attack/
-https://www.netscout.com/what-is-ddos/slowloris-attacks
-https://www.netscout.com/what-is-ddos/slow-post-attacks
-https://www.cloudflare.com/learning/ddos/ddos-attack-tools/slowloris/
+- [Low and slow attacks](https://www.cloudflare.com/learning/ddos/ddos-low-and-slow-attack/)
+- [Slowloris 1](https://www.netscout.com/what-is-ddos/slowloris-attacks)
+- [Slowloris 2](https://www.cloudflare.com/learning/ddos/ddos-attack-tools/slowloris/)
+- [Slow post](https://www.netscout.com/what-is-ddos/slow-post-attacks)
+- [Slow read](https://es.netscout.com/what-is-ddos/slow-read-attacks)
+- [Slowhttptest installation and usage](https://github.com/shekyan/slowhttptest/wiki/InstallationAndUsage)
