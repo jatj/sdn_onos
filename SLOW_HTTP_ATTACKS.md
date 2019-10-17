@@ -88,7 +88,7 @@ If we are running a slowloris attack with **slowhttptest** we can configure the 
 
 ## Attacking
 
-So if we want to attack the site https://super12.com/ with slowloris, 1000 connections at a rate of 100 connections per second, and generate the attack statistics with the _slowloris-test_ name, we would run the following command, `slowhttptest -H -u https://super12.com/ -c 1000 -r 100 -g -o slowloris-test`. 
+If we want to attack the site https://super12.com/ with slowloris, 1000 connections at a rate of 100 connections per second, and generate the attack statistics with the _slowloris-test_ name, we would run the following command: `slowhttptest -H -u https://super12.com/ -c 1000 -r 100 -g -o slowloris-test`. 
 
 After running it we will see something like this on our terminal:
 
@@ -109,6 +109,24 @@ After finishing the test will generate a .csv and a .html with the statistics of
 It is another application layer attack and in a difference from slowloris it uses legitimate HTTP POST headers to attack, however the message body is sent at a very low speed, which can be as slow as one byte every two minutes. 
 
 Similar to slowloris the server will keep the attacker requests open waiting to receive the full message body, which will eventually consume all the server resources, making legitimate connections unachievable.
+
+## Attacking
+
+The attack options are the same for slowloris, for more information on those options you can check the [attack configuration](#attack%20configuration) section above. 
+
+Besides the previous options, if we are using slow post we can also use the next option:
+
+- `-s <BYTES>`, the value of Content-Length header (default is 4096)
+
+If we want to attack the site https://super12.com/, using slow post, with 5000 connections at a rate of 100 connections per second, with a content length of 16384 and generate the attack statistics with the _slowloris-test_ name, we would run the following command: `slowhttptest -B -u https://super12.com/ -c 5000 -r 100 -s 16384 -g -o slowpost-test`.
+
+## Analizing
+
+After running the test we can analize the generated html to check that the server reacted different from the slowloris attack.
+
+![slowpost attack](./res/slow-attack/slowpost-test1-html.png)
+
+With this type of attack the server was able to close several attack connections quicker than with slowloris. So the test results show an smaller gap of time when the server wasn't responding to legitimate connections, even though we run this attack with 5 times the number of connections used by the slowloris example.
 
 # Slow read
 
