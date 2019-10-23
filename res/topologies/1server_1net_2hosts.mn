@@ -1,0 +1,131 @@
+{
+    "application": {
+        "dpctl": "",
+        "ipBase": "10.0.0.0/8",
+        "netflow": {
+            "nflowAddId": "0",
+            "nflowTarget": "",
+            "nflowTimeout": "600"
+        },
+        "openFlowVersions": {
+            "ovsOf10": "1",
+            "ovsOf11": "0",
+            "ovsOf12": "0",
+            "ovsOf13": "0"
+        },
+        "sflow": {
+            "sflowHeader": "128",
+            "sflowPolling": "30",
+            "sflowSampling": "400",
+            "sflowTarget": ""
+        },
+        "startCLI": "1",
+        "switchType": "ovs",
+        "terminalType": "xterm"
+    },
+    "controllers": [
+        {
+            "opts": {
+                "controllerProtocol": "tcp",
+                "controllerType": "remote",
+                "hostname": "c0",
+                "remoteIP": "172.17.0.1",
+                "remotePort": 6633
+            },
+            "x": "519.0",
+            "y": "342.0"
+        }
+    ],
+    "hosts": [
+        {
+            "number": "2",
+            "opts": {
+                "defaultRoute": "172.17.0.1",
+                "hostname": "attack1",
+                "ip": "10.0.0.1",
+                "nodeNum": 2,
+                "sched": "host"
+            },
+            "x": "565.0",
+            "y": "595.0"
+        },
+        {
+            "number": "1",
+            "opts": {
+                "defaultRoute": "172.17.0.1",
+                "hostname": "http1",
+                "ip": "10.0.1.1",
+                "nodeNum": 1,
+                "sched": "host"
+            },
+            "x": "617.0",
+            "y": "95.0"
+        },
+        {
+            "number": "3",
+            "opts": {
+                "defaultRoute": "172.17.0.1",
+                "hostname": "legit1",
+                "ip": "10.0.0.2",
+                "nodeNum": 3,
+                "sched": "host"
+            },
+            "x": "681.0",
+            "y": "592.0"
+        }
+    ],
+    "links": [
+        {
+            "dest": "s1",
+            "opts": {},
+            "src": "legit1"
+        },
+        {
+            "dest": "s2",
+            "opts": {},
+            "src": "http1"
+        },
+        {
+            "dest": "s1",
+            "opts": {},
+            "src": "attack1"
+        },
+        {
+            "dest": "s1",
+            "opts": {},
+            "src": "s2"
+        }
+    ],
+    "switches": [
+        {
+            "number": "1",
+            "opts": {
+                "controllers": [
+                    "c0"
+                ],
+                "hostname": "s1",
+                "nodeNum": 1,
+                "switchType": "default"
+            },
+            "x": "619.0",
+            "y": "475.0"
+        },
+        {
+            "number": "2",
+            "opts": {
+                "controllers": [
+                    "c0"
+                ],
+                "hostname": "s2",
+                "netflow": "0",
+                "nodeNum": 2,
+                "sflow": "0",
+                "switchIP": "",
+                "switchType": "default"
+            },
+            "x": "618.0",
+            "y": "223.0"
+        }
+    ],
+    "version": "2"
+}

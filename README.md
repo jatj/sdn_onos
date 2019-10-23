@@ -11,4 +11,6 @@
 # Tutorials
  - [Onos installation](./INSTALL.md)
  - [HTTP attacks](./HTTP_ATTACKS.md)
+ - [Slow HTTP attacks](./SLOW_HTTP_ATTACKS.md)
+ - [Mininet custom topologies](./TOPOLOGIES.md)
 
