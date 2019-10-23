@@ -1,0 +1,16 @@
+
+Todo:
+  ☐ Item
+
+  - HTTP servers usage:
+1. **apache** 43.9%
+1. **nginx** 30.6%
+1. IIS 8.1% (No es posible de correr en linux)
+1. **LiteSpeed** 4.8%
+1. Google servers 1.0% (No instalable)
+1. **Nodejs** 0.7% 
+1. **Tomcat** 0.2% 
+
+https://w3techs.com/technologies/overview/web_server/all
+
+https://link.springer.com/article/10.1186/s40537-019-0230-3
