@@ -16,5 +16,5 @@ This repository contains several guides on how to install and work with ONOS. An
  - [HTTP attacks](./HTTP_ATTACKS.md)
  - [Slow HTTP attacks](./SLOW_HTTP_ATTACKS.md)
  - [Mininet custom topologies](./TOPOLOGIES.md)
- - [Building an ONOS application](./BUILDING_ONOS_APPS.md)
+ - [Building an ONOS application](./BUILDING_ONOS_APP.md)
 
