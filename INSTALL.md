@@ -10,7 +10,7 @@ This tutorial will teach you how to properly install ONOS using Docker and you w
 Login to the mininet VM with a user with super user permissions and run the following commands to install docker.
 1. `sudo apt-get update` Downloads the packages lists from the repositories
 1. `sudo apt-get -y install docker.io` Install the docker.io package
-1. `ln -sf /usr/bin/docker.io /usr/local/bin/docker` Creates a symlink from where the docker io package files where installed to the directory /usr/local/bin/docker, so a linux user can run the docker cli by just running `docker`.
+1. `sudo ln -sf /usr/bin/docker.io /usr/local/bin/docker` Creates a symlink from where the docker io package files where installed to the directory /usr/local/bin/docker, so a linux user can run the docker cli by just running `docker`.
 
 ## Run Docker image
 - Download the onos image using  `sudo docker pull onosproject/onos`.
@@ -62,7 +62,7 @@ Since ONOS is running from a container, we will use ssh to access to the ONOS in
 
 ![Onos CLI](./res/install/onos_cli.png)
 
-From there we can configure the controller, with the command `apps -s` we can list all the applications of the controller. We will now activate the open flow application by running `app activate org.onosproject.openflow`
+From there we can configure the controller, with the command `apps -s` we can list all the applications of the controller. We will now activate the open flow application by running `app activate org.onosproject.openflow`. And also we need to install the feature onos-apps-fwd which is installed with the following command `feature:install onos-apps-fwd`.
 
 ![Activate OpenFlow](./res/install/activate_openflow.png)
 
