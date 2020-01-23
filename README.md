@@ -18,3 +18,7 @@ This repository contains several guides on how to install and work with ONOS. An
  - [Mininet custom topologies](./TOPOLOGIES.md)
  - [Building an ONOS application](./BUILDING_ONOS_APP.md)
 
+# Other repos
+- [Pcap parser](https://github.com/jatj/pcapParser)
+- [Random forest classifier for HTTP DDoS attacks](https://github.com/jatj/random_forest_http_attacks)
+- [HttpDdosDetector application](https://github.com/jatj/httpDetector)

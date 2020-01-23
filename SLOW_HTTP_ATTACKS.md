@@ -155,15 +155,9 @@ After running the test we can see that unlike the slow post attack, slow read ke
 
 # References:
 
-## Documentation:
 - [Low and slow attacks](https://www.cloudflare.com/learning/ddos/ddos-low-and-slow-attack/)
 - [Slowloris 1](https://www.netscout.com/what-is-ddos/slowloris-attacks)
 - [Slowloris 2](https://www.cloudflare.com/learning/ddos/ddos-attack-tools/slowloris/)
 - [Slow post](https://www.netscout.com/what-is-ddos/slow-post-attacks)
 - [Slow read](https://es.netscout.com/what-is-ddos/slow-read-attacks)
 - [Slowhttptest installation and usage](https://github.com/shekyan/slowhttptest/wiki/InstallationAndUsage)
-
-## Other repos
-- [Pcap parser](https://github.com/jatj/pcapParser)
-- [Random forest classifier for HTTP DDoS attacks](https://github.com/jatj/random_forest_http_attacks)
-- [HttpDdosDetector application](https://github.com/jatj/httpDetector)
